@@ -174,6 +174,10 @@
                             <i data-lucide="message-square" class="w-5 h-5"></i>
                             Rekrut Saya
                         </a>
+                        <a href="mailto:danimauludi55@gmail.com?subject=Lamar%20Kerja%20CNC%20Programmer&body=Halo%20Bapak/Ibu%2C%0A%0ASaya%20tertarik%20melamar%20posisi%20CNC%20Programmer%20di%20perusahaan%20Anda.%0A%0ASilakan%20lihat%20portofolio%20saya%20di%20link%20berikut%20ini%3A%0A%0Ahttps%3A%2F%2F%3CUSERNAME%3E.github.io%2Fportofolio-danimauludi%2F%0A%0ATerima%20kasih." class="w-full sm:w-auto px-8 py-4 bg-emerald-400 hover:bg-emerald-300 text-slate-900 font-semibold rounded-xl shadow-lg shadow-emerald-950/30 transition-all duration-300 flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            Lamar Kerja
+                        </a>
                         <button onclick="copyPortfolioLink()" class="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 hover:border-slate-600 font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                             <i data-lucide="link" class="w-5 h-5 text-cyan-400"></i>
                             Bagikan Link Portfolio
@@ -200,7 +204,13 @@
                         <!-- Formal Photo Frame -->
                         <div class="w-full h-full bg-slate-950 rounded-2xl overflow-hidden relative group">
                             <!-- FOTO FORMAL DI SINI (File IMG_2750.jpg) -->
-                            <img src="IMG_2750.jpg" alt="Dani Mauludi - Foto Formal" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" onerror="this.src='def6cb9f-3248-4413-b27d-eaca994f36ef.jpg';">
+                            <img id="hero-profile-photo" src="IMG_2750.jpg" alt="Dani Mauludi - Foto Formal" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" onerror="this.src='def6cb9f-3248-4413-b27d-eaca994f36ef.jpg';">
+                            <div class="absolute top-4 right-4">
+                                <label for="profile-photo-input" class="cursor-pointer inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-200 bg-slate-900/90 border border-slate-700 rounded-full hover:bg-slate-800 transition">
+                                    <i data-lucide="image" class="w-4 h-4"></i>
+                                    Ganti Foto
+                                </label>
+                            </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60"></div>
                             <div class="absolute bottom-4 left-4 right-4 text-center bg-slate-900/95 backdrop-blur-sm p-3 rounded-xl border border-slate-800">
                                 <p class="text-sm font-bold text-white tracking-wide">DANI MAULUDI</p>
@@ -216,6 +226,9 @@
         </div>
     </section>
 
+    <input type="file" id="profile-photo-input" accept="image/*" class="hidden" />
+    <input type="file" id="about-photo-input" accept="image/*" class="hidden" />
+
     <!-- Tentang Saya Section -->
     <section id="tentang" class="py-20 bg-slate-950/50 border-t border-slate-900 relative">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -226,7 +239,13 @@
                     <div class="relative w-72 h-96 rounded-2xl bg-gradient-to-br from-cyan-500 to-brand-600 p-1 shadow-2xl">
                         <div class="w-full h-full bg-steel-900 rounded-2xl overflow-hidden relative group">
                             <!-- FOTO TENTANG SAYA (def6cb9f-3248-4413-b27d-eaca994f36ef.jpg) -->
-                            <img src="def6cb9f-3248-4413-b27d-eaca994f36ef.jpg" alt="Dani Mauludi - Tentang Saya" class="w-full h-full object-cover" onerror="this.src='IMG_2750.jpg';">
+                            <img id="about-profile-photo" src="def6cb9f-3248-4413-b27d-eaca994f36ef.jpg" alt="Dani Mauludi - Tentang Saya" class="w-full h-full object-cover" onerror="this.src='IMG_2750.jpg';">
+                            <div class="absolute top-4 right-4">
+                                <label for="about-photo-input" class="cursor-pointer inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-200 bg-slate-900/90 border border-slate-700 rounded-full hover:bg-slate-800 transition">
+                                    <i data-lucide="image" class="w-4 h-4"></i>
+                                    Ganti Foto
+                                </label>
+                            </div>
                             <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950 p-4">
                                 <p class="text-xs text-cyan-400 uppercase tracking-widest font-bold">Teknik Pemesinan</p>
                                 <p class="text-sm font-semibold text-white">SMKN 1 Grati Alumnus</p>
@@ -1412,6 +1431,39 @@
             if (e.target === modal) {
                 closeCertificateModal();
             }
+        });
+
+        // Photo editor for portfolio images
+        let currentHeroPhotoURL;
+        let currentAboutPhotoURL;
+
+        function updatePhotoPreview(input, imageId) {
+            const file = input.files && input.files[0];
+            if (!file) return;
+
+            const image = document.getElementById(imageId);
+            const newUrl = URL.createObjectURL(file);
+
+            if (imageId === 'hero-profile-photo' && currentHeroPhotoURL) {
+                URL.revokeObjectURL(currentHeroPhotoURL);
+            }
+            if (imageId === 'about-profile-photo' && currentAboutPhotoURL) {
+                URL.revokeObjectURL(currentAboutPhotoURL);
+            }
+
+            image.src = newUrl;
+            if (imageId === 'hero-profile-photo') currentHeroPhotoURL = newUrl;
+            if (imageId === 'about-profile-photo') currentAboutPhotoURL = newUrl;
+
+            showToast('Foto portofolio berhasil diganti sementara.');
+        }
+
+        document.getElementById('profile-photo-input').addEventListener('change', function() {
+            updatePhotoPreview(this, 'hero-profile-photo');
+        });
+
+        document.getElementById('about-photo-input').addEventListener('change', function() {
+            updatePhotoPreview(this, 'about-profile-photo');
         });
 
         // Form Submit Simulation
