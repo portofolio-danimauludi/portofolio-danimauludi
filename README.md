@@ -52,9 +52,23 @@ Di halaman portofolio, ada tombol **Ganti Foto** pada:
 
 Klik tombol tersebut lalu pilih file gambar dari komputer atau HP kamu. Gambar akan langsung berubah di halaman.
 
-> Catatan: perubahan ini bersifat sementara untuk tampilan browser saat itu. Untuk mengganti foto secara permanen, unggah ulang file gambar baru ke repo GitHub:
-> - `IMG_2750.jpg`
-> - `def6cb9f-3248-4413-b27d-eaca994f36ef.jpg`
+
+> Catatan: perubahan ini bersifat sementara untuk tampilan browser saat itu. Untuk mengganti foto secara permanen, gunakan tombol **Simpan** pada setiap gambar untuk mengunduh file gambar hasil edit, lalu simpan file tersebut ke folder proyek dan commit & push ke repo.
+
+Langkah menyimpan permanen setelah menggunakan tombol `Simpan` pada halaman:
+
+1. Simpan file yang terunduh ke folder proyek kamu (`/Users/f/portofolio-danimauludi`) menggantikan file gambar yang lama (pastikan nama file sama).
+2. Jalankan perintah di terminal dari folder proyek:
+
+```bash
+git add .
+git commit -m "Update foto portofolio"
+git push
+```
+
+3. Jika diminta autentikasi saat `git push`, masukkan username GitHub kamu dan `Personal Access Token (PAT)` sebagai password.
+
+Setelah beberapa menit, GitHub Pages akan menampilkan versi terbaru.
 
 ## 4. Jika ingin deploy ulang setelah mengganti foto
 1. Ganti file foto di folder project dengan nama yang sama.
